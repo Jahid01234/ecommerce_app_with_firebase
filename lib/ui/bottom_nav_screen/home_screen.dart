@@ -2,6 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:e_commerce_app_with_firebase/constant/Colors/app_colors.dart';
+import 'package:e_commerce_app_with_firebase/ui/product_details_screen.dart';
 import 'package:e_commerce_app_with_firebase/ui/search_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -215,25 +216,33 @@ class _HomeScreenState extends State<HomeScreen> {
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2, childAspectRatio: 1),
                   itemBuilder: (_, index) {
-                    return Card(
-                      elevation: 1,
-                      child: Column(
-                        children: [
-                          AspectRatio(
-                              aspectRatio: 2,
-                              child: Image.network(
-                                  productsList[index]["product-img"][0],
-                                  fit: BoxFit.fill)),
-                          SizedBox(height: 10.h),
-                          Text(
-                            "${productsList[index]["product-name"]}",
-                            style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black,
+                    return GestureDetector(
+                      onTap: (){
+                        Navigator.push(context, MaterialPageRoute(
+                            builder: (context)=>ProductDetailsScreen(product: productsList[index]),
+                        ),
+                        );
+                      },
+                      child: Card(
+                        elevation: 1,
+                        child: Column(
+                          children: [
+                            AspectRatio(
+                                aspectRatio: 2,
+                                child: Image.network(
+                                    productsList[index]["product-img"][0],
+                                    fit: BoxFit.fill)),
+                            SizedBox(height: 10.h),
+                            Text(
+                              "${productsList[index]["product-name"]}",
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black,
+                              ),
                             ),
-                          ),
-                          Text("${productsList[index]["product-price"]}"),
-                        ],
+                            Text("${productsList[index]["product-price"]}"),
+                          ],
+                        ),
                       ),
                     );
                   },

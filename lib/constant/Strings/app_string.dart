@@ -14,4 +14,5 @@ class AppString{
   static const String signInText = " Sign In";
   static const String continueText = "Continue";
   static const String submitText = "Submit";
+  static const String addToCartText = "Add To Cart";
 }
