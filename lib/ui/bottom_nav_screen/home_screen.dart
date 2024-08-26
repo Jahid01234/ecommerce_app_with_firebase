@@ -4,6 +4,7 @@ import 'package:dots_indicator/dots_indicator.dart';
 import 'package:e_commerce_app_with_firebase/constant/Colors/app_colors.dart';
 import 'package:e_commerce_app_with_firebase/ui/product_details_screen.dart';
 import 'package:e_commerce_app_with_firebase/ui/search_screen.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -61,7 +62,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false ,
+      resizeToAvoidBottomInset: true ,
       appBar: AppBar(
         title: const Text("E-Commerce"),
       ),
@@ -78,6 +79,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: SizedBox(
                       height: 60.h,
                       child: TextFormField(
+                        readOnly: true,
                         controller: _searchTEController,
                         decoration: const InputDecoration(
                           border: InputBorder.none,
