@@ -65,6 +65,7 @@ class _HomeScreenState extends State<HomeScreen> {
       resizeToAvoidBottomInset: true ,
       appBar: AppBar(
         title: const Text("E-Commerce"),
+        automaticallyImplyLeading: false,
       ),
       body: SafeArea(
         child: Padding(

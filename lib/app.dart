@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
         return MaterialApp(
           title: "E-commerce App",
           debugShowCheckedModeBanner: false,
-          home:  const MainBottomNavScreen(),
+          home:  const SplashScreen(),
           theme: ThemeData(
             appBarTheme:AppBarStyle.appBarStyle(),
             inputDecorationTheme: TextFormFieldDecoration.getTextFormField()

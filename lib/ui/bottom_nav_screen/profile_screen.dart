@@ -26,6 +26,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       appBar: AppBar(
         backgroundColor: Colors.cyan,
         title: const Text("Update User Information",style: TextStyle(fontSize: 18,color: Colors.white),),
+        automaticallyImplyLeading: false,
       ),
       body: SafeArea(
         child: Padding(

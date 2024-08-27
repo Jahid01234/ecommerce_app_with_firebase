@@ -1,4 +1,5 @@
 import 'package:e_commerce_app_with_firebase/constant/Strings/app_string.dart';
+import 'package:e_commerce_app_with_firebase/ui/main_bottom_nav_screen.dart';
 import 'package:e_commerce_app_with_firebase/ui/registration_screen.dart';
 import 'package:e_commerce_app_with_firebase/ui/user_form.dart';
 import 'package:e_commerce_app_with_firebase/widgets/showDialog_message.dart';
@@ -45,7 +46,7 @@ class _LoginScreenState extends State<LoginScreen> {
         if (mounted) {
           displayMessageToUser("Login is successful!", context);
           Navigator.push(
-            context, MaterialPageRoute(builder: (context) => const UserForm(),
+            context, MaterialPageRoute(builder: (context) => const MainBottomNavScreen(),
           ),
           );
         }

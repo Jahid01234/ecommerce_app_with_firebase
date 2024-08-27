@@ -1,7 +1,10 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:e_commerce_app_with_firebase/constant/Colors/app_colors.dart';
 import 'package:e_commerce_app_with_firebase/constant/Strings/app_string.dart';
+import 'package:e_commerce_app_with_firebase/widgets/showDialog_message.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -150,6 +153,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                   ),
                   child: Text(AppString.addToCartText,style: TextStyle(color: AppColors.white, fontSize: 14.sp),),
                   onPressed: (){
+                    addToCart(context);
                   },
                 ),
               ),
@@ -159,5 +163,19 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
         ),
       ),
     );
+  }
+
+  // Add product item to Cart
+  Future<void> addToCart(context) async{
+    final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+    final currentUser = firebaseAuth.currentUser;
+
+    CollectionReference collectionReference = FirebaseFirestore.instance.collection("user-cart-item");
+    await collectionReference.doc(currentUser!.email).collection("items").doc().set({
+      "name" : widget.product["product-name"],
+      "price" : widget.product["product-price"],
+      "images" : widget.product["product-img"],
+    });
+    displayMessageToUser("Add to cart successfully!", context);
   }
 }
