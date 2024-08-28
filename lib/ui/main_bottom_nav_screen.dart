@@ -3,7 +3,6 @@ import 'package:e_commerce_app_with_firebase/ui/bottom_nav_screen/favourite_scre
 import 'package:e_commerce_app_with_firebase/ui/bottom_nav_screen/home_screen.dart';
 import 'package:e_commerce_app_with_firebase/ui/bottom_nav_screen/profile_screen.dart';
 import 'package:flutter/material.dart';
-
 import '../constant/Colors/app_colors.dart';
 
 class MainBottomNavScreen extends StatefulWidget {
@@ -14,6 +13,7 @@ class MainBottomNavScreen extends StatefulWidget {
 }
 
 class _MainBottomNavScreenState extends State<MainBottomNavScreen> {
+
    int _selectedIndex = 0;
   final List<Widget> _screen = const [
     HomeScreen(),
@@ -55,7 +55,6 @@ class _MainBottomNavScreenState extends State<MainBottomNavScreen> {
             icon: Icon(Icons.person),
           ),
         ],
-
       ),
     );
   }

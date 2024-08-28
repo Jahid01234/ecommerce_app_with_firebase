@@ -55,6 +55,7 @@ class _UserFormState extends State<UserForm> {
     );
   }
 
+  // sent data to FireStore Database
   Future<void> _sendData(context) async {
     final FirebaseAuth auth = FirebaseAuth.instance;
     final currentUser = auth.currentUser;

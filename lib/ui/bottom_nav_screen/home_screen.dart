@@ -4,7 +4,6 @@ import 'package:dots_indicator/dots_indicator.dart';
 import 'package:e_commerce_app_with_firebase/constant/Colors/app_colors.dart';
 import 'package:e_commerce_app_with_firebase/ui/product_details_screen.dart';
 import 'package:e_commerce_app_with_firebase/ui/search_screen.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -16,41 +15,11 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+
   final TextEditingController _searchTEController = TextEditingController();
   final List<String> carouselImagesList = [];
   final List productsList = [];
   int _dotsPosition = 0;
-
-  // Get CarouselImages data from firebase
-  Future<void> _getCarouselImages() async {
-    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
-    QuerySnapshot qn = await firebaseFirestore.collection("carousel-slider").get();
-
-    for (int i = 0; i < qn.docs.length; i++) {
-      setState(() {
-        carouselImagesList.add(
-          qn.docs[i]["img-path"],
-        );
-      });
-    }
-  }
-
-  // Get Product data from firebase
-  Future<void> _getProductDetails() async {
-    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
-    QuerySnapshot qn = await firebaseFirestore.collection("products").get();
-
-    for (int i = 0; i < qn.docs.length; i++) {
-      setState(() {
-        productsList.add({
-          "product-name": qn.docs[i]["product-name"],
-          "product-description": qn.docs[i]["product-description"],
-          "product-img": qn.docs[i]["product-img"],
-          "product-price": qn.docs[i]["product-price"]
-        });
-      });
-    }
-  }
 
   @override
   void initState() {
@@ -71,7 +40,6 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(
-            //crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // search box
               Row(
@@ -101,7 +69,10 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         ),
                         onTap: (){
-                          Navigator.push(context, MaterialPageRoute(builder: (context)=>const SearchScreen()));
+                          Navigator.push(context, MaterialPageRoute(
+                              builder: (context)=>const SearchScreen(),
+                          ),
+                          );
                         },
                       ),
                     ),
@@ -217,13 +188,17 @@ class _HomeScreenState extends State<HomeScreen> {
                   scrollDirection: Axis.horizontal,
                   itemCount: productsList.length,
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2, childAspectRatio: 1),
+                      crossAxisCount: 2,
+                      childAspectRatio: 1,
+                   ),
                   itemBuilder: (_, index) {
                     return GestureDetector(
                       onTap: (){
                         Navigator.push(context, MaterialPageRoute(
-                            builder: (context)=>ProductDetailsScreen(product: productsList[index]),
-                        ),
+                            builder: (context)=>ProductDetailsScreen(
+                                product: productsList[index],
+                            ),
+                          ),
                         );
                       },
                       child: Card(
@@ -234,7 +209,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                 aspectRatio: 2,
                                 child: Image.network(
                                     productsList[index]["product-img"][0],
-                                    fit: BoxFit.fill)),
+                                    fit: BoxFit.fill,
+                                ),
+                            ),
                             SizedBox(height: 10.h),
                             Text(
                               "${productsList[index]["product-name"]}",
@@ -257,4 +234,36 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
+
+  // Get CarouselImages data from firebase
+  Future<void> _getCarouselImages() async {
+    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+    QuerySnapshot qn = await firebaseFirestore.collection("carousel-slider").get();
+
+    for (int i = 0; i < qn.docs.length; i++) {
+      setState(() {
+        carouselImagesList.add(
+          qn.docs[i]["img-path"],
+        );
+      });
+    }
+  }
+
+  // Get Product data from firebase
+  Future<void> _getProductDetails() async {
+    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+    QuerySnapshot qn = await firebaseFirestore.collection("products").get();
+
+    for (int i = 0; i < qn.docs.length; i++) {
+      setState(() {
+        productsList.add({
+          "product-name": qn.docs[i]["product-name"],
+          "product-description": qn.docs[i]["product-description"],
+          "product-img": qn.docs[i]["product-img"],
+          "product-price": qn.docs[i]["product-price"]
+        });
+      });
+    }
+  }
+
 }

@@ -51,7 +51,10 @@ class _SearchScreenState extends State<SearchScreen> {
                 ),
               ),
               SizedBox(height: 15.h),
-              const Text("Search Product List",style: TextStyle(fontWeight: FontWeight.bold),),
+              const Text("Search Product List",style: TextStyle(
+                  fontWeight: FontWeight.bold,
+              ),
+              ),
               SizedBox(height: 8.h),
               Expanded(
                   child: Container(
@@ -71,7 +74,10 @@ class _SearchScreenState extends State<SearchScreen> {
                                  Map<String, dynamic> data = document.data() as Map<String, dynamic>;
                                  return GestureDetector(
                                    onTap: (){
-                                     Navigator.push(context, MaterialPageRoute(builder: (context)=>ProductDetailsScreen(product: data,)));
+                                     Navigator.push(context, MaterialPageRoute(
+                                         builder: (context)=>ProductDetailsScreen(product: data,),
+                                     ),
+                                     );
                                    },
                                    child: Card(
                                      child: ListTile(

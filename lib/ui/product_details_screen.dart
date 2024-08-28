@@ -28,7 +28,6 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   @override
   void initState() {
     super.initState();
-    // Check if the product is already in favorites
     checkIfFavorite();
   }
 

@@ -13,6 +13,7 @@ class FavouriteScreen extends StatelessWidget {
         centerTitle: true,
         automaticallyImplyLeading: false,
       ),
+
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(20),

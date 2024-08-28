@@ -157,7 +157,11 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                   validator: (value) {
                                     if (value == null || value.isEmpty) {
                                       return 'Please enter your email';
-                                    } else if (!RegExp(r'^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$').hasMatch(value)) {
+                                    } else if (
+                                    !RegExp(
+                                        r'^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$')
+                                        .hasMatch(value)
+                                    ) {
                                       return 'Please enter a valid email address';
                                     }
                                     return null;
@@ -250,7 +254,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                   elevation: 2
                               ),
                               child: Text(AppString.continueText,
-                                style: TextStyle(color: AppColors.white, fontSize: 14.sp,
+                                style: TextStyle(
+                                  color: AppColors.white,
+                                  fontSize: 14.sp,
                                 ),
                               ),
                               onPressed: (){
@@ -286,8 +292,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                     ),
                                   ),
                                   onTap: () {
-                                    Navigator.push(context, MaterialPageRoute(builder: (context)=>const LoginScreen(),
-                                    ),
+                                    Navigator.push(context, MaterialPageRoute(
+                                      builder: (context)=>const LoginScreen(),
+                                     ),
                                     );
                                   },
                                 )

@@ -25,7 +25,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.cyan,
-        title: const Text("Update User Information",style: TextStyle(fontSize: 18,color: Colors.white),),
+        title: const Text("Update User Information",style: TextStyle(
+            fontSize: 18,color: Colors.white,
+          ),
+        ),
         automaticallyImplyLeading: false,
       ),
       body: SafeArea(
@@ -33,7 +36,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
           padding: const EdgeInsets.all(20),
           child: SingleChildScrollView(
             child: StreamBuilder(
-              stream: FirebaseFirestore.instance.collection("user-form_data").doc(FirebaseAuth.instance.currentUser!.email).snapshots(),
+              stream: FirebaseFirestore.instance.collection("user-form_data").
+                      doc(FirebaseAuth.instance.currentUser!.email).snapshots(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const Center(child: CircularProgressIndicator());
@@ -56,9 +60,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
 
+   // Update user data
    Future<void> updateData() async{
      CollectionReference _collectionRef = FirebaseFirestore.instance.collection("user-form_data");
-    await _collectionRef.doc(FirebaseAuth.instance.currentUser!.email).update(
+     await _collectionRef.doc(FirebaseAuth.instance.currentUser!.email).update(
          {
            "name":_nameTextEditingController.text,
            "phone":_phoneNumberTextEditingController.text,

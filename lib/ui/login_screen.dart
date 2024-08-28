@@ -23,62 +23,8 @@ class _LoginScreenState extends State<LoginScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   bool _showPassword = false;
 
-  // Login user with Firebase
-  // Future<void> _loginUser() async{
-  //
-  //   // loading circle
-  //   showDialog(
-  //       context: context,
-  //       builder: (context){
-  //         return const Center(
-  //           child: CircularProgressIndicator(),
-  //         );
-  //       }
-  //   );
-  //   //  Sign-In the user
-  //   try{
-  //     UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
-  //         email:_emailController.text ,
-  //         password: _passwordController.text
-  //     );
-  //
-  //     final authCredential = userCredential.user;
-  //     if(authCredential != null && authCredential.uid.isNotEmpty) {
-  //       if (mounted) {
-  //         displayMessageToUser("Login is successful!", context);
-  //         Navigator.push(
-  //           context, MaterialPageRoute(builder: (context) => const MainBottomNavScreen(),
-  //         ),
-  //         );
-  //       }
-  //     }else{
-  //       if (mounted) {
-  //         displayMessageToUser("Something is wrong!", context);
-  //       }
-  //     }
-  //
-  //   } on FirebaseAuthException catch(e){
-  //     if(e.code == 'user-not-found'){
-  //       if (mounted) {
-  //         displayMessageToUser("No user found for that email!", context);
-  //       }
-  //     }else if(e.code == 'wrong-password') {
-  //       if (mounted) {
-  //         displayMessageToUser(
-  //             "Wrong password provided for that user", context);
-  //
-  //     }
-  //     }else{
-  //       if (mounted) {
-  //         displayMessageToUser("An error occurred: ${e.message}", context);
-  //       }
-  //     }
-  //   }catch(e){
-  //       print(e);
-  //
-  //   }
-  // }
 
+  // Login user with Firebase
   Future<void> _loginUser() async {
     // Show loading circle
     showDialog(
@@ -148,7 +94,6 @@ class _LoginScreenState extends State<LoginScreen> {
       }
     } catch (e) {
       Navigator.pop(context); // Remove the loading circle
-      print(e);
     }
   }
 
@@ -317,11 +262,6 @@ class _LoginScreenState extends State<LoginScreen> {
                           SizedBox(
                             height: 50.h,
                           ),
-
-                          // elevated button
-                          // customButton("Sign In", (){
-                          //   signIn();
-                          // },),
 
                           SizedBox(
                             height: 20.h,

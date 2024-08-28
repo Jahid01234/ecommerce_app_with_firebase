@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:e_commerce_app_with_firebase/constant/Colors/app_colors.dart';
 import 'package:e_commerce_app_with_firebase/constant/Strings/app_string.dart';
 import 'package:e_commerce_app_with_firebase/ui/login_screen.dart';
