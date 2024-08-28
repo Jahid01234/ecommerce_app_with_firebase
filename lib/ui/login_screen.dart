@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce_app_with_firebase/constant/Strings/app_string.dart';
 import 'package:e_commerce_app_with_firebase/ui/main_bottom_nav_screen.dart';
 import 'package:e_commerce_app_with_firebase/ui/registration_screen.dart';
@@ -23,109 +24,133 @@ class _LoginScreenState extends State<LoginScreen> {
   bool _showPassword = false;
 
   // Login user with Firebase
-  Future<void> _loginUser() async{
-
-    // loading circle
-    showDialog(
-        context: context,
-        builder: (context){
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
-        }
-    );
-    //  Sign-In the user
-    try{
-      UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
-          email:_emailController.text ,
-          password: _passwordController.text
-      );
-
-      final authCredential = userCredential.user;
-      if(authCredential != null && authCredential.uid.isNotEmpty) {
-        if (mounted) {
-          displayMessageToUser("Login is successful!", context);
-          Navigator.push(
-            context, MaterialPageRoute(builder: (context) => const MainBottomNavScreen(),
-          ),
-          );
-        }
-      }else{
-        if (mounted) {
-          displayMessageToUser("Something is wrong!", context);
-        }
-      }
-
-    } on FirebaseAuthException catch(e){
-      if(e.code == 'user-not-found'){
-        if (mounted) {
-          displayMessageToUser("No user found for that email!", context);
-        }
-      }else if(e.code == 'wrong-password') {
-        if (mounted) {
-          displayMessageToUser(
-              "Wrong password provided for that user", context);
-
-      }
-      }else{
-        if (mounted) {
-          displayMessageToUser("An error occurred: ${e.message}", context);
-        }
-      }
-    }catch(e){
-        print(e);
-
-    }
-  }
-
-
-
-
-  // Future<void> _loginUser() async {
-  //   // Sign-In the user
-  //   try {
+  // Future<void> _loginUser() async{
+  //
+  //   // loading circle
+  //   showDialog(
+  //       context: context,
+  //       builder: (context){
+  //         return const Center(
+  //           child: CircularProgressIndicator(),
+  //         );
+  //       }
+  //   );
+  //   //  Sign-In the user
+  //   try{
   //     UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
-  //       email: _emailController.text,
-  //       password: _passwordController.text,
+  //         email:_emailController.text ,
+  //         password: _passwordController.text
   //     );
   //
   //     final authCredential = userCredential.user;
-  //     if (authCredential != null && authCredential.uid.isNotEmpty) {
+  //     if(authCredential != null && authCredential.uid.isNotEmpty) {
   //       if (mounted) {
   //         displayMessageToUser("Login is successful!", context);
   //         Navigator.push(
-  //           context,
-  //           MaterialPageRoute(builder: (context) => const HomeScreen()),
+  //           context, MaterialPageRoute(builder: (context) => const MainBottomNavScreen(),
+  //         ),
   //         );
   //       }
-  //     } else {
+  //     }else{
   //       if (mounted) {
   //         displayMessageToUser("Something is wrong!", context);
   //       }
   //     }
-  //   } on FirebaseAuthException catch (e) {
-  //     if (e.code == 'user-not-found') {
+  //
+  //   } on FirebaseAuthException catch(e){
+  //     if(e.code == 'user-not-found'){
   //       if (mounted) {
   //         displayMessageToUser("No user found for that email!", context);
   //       }
-  //     } else if (e.code == 'wrong-password') {
+  //     }else if(e.code == 'wrong-password') {
   //       if (mounted) {
-  //         displayMessageToUser("Wrong password provided for that user!", context);
-  //       }
-  //     } else {
+  //         displayMessageToUser(
+  //             "Wrong password provided for that user", context);
+  //
+  //     }
+  //     }else{
   //       if (mounted) {
   //         displayMessageToUser("An error occurred: ${e.message}", context);
   //       }
   //     }
-  //   } catch (e) {
-  //     if (mounted) {
-  //       displayMessageToUser("An error occurred: ${e.toString()}", context);
-  //     }
+  //   }catch(e){
+  //       print(e);
+  //
   //   }
   // }
 
+  Future<void> _loginUser() async {
+    // Show loading circle
+    showDialog(
+        context: context,
+        builder: (context) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        });
 
+    try {
+      // Sign-In the user
+      UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: _emailController.text,
+        password: _passwordController.text,
+      );
 
+      final authCredential = userCredential.user;
+      if (authCredential != null && authCredential.uid.isNotEmpty) {
+        // Check if the user has filled the form
+        DocumentSnapshot userData = await FirebaseFirestore.instance
+            .collection('user-form_data')
+            .doc(authCredential.email)
+            .get();
+
+        Navigator.pop(context); // Remove the loading circle
+
+        if (userData.exists) {
+          // If data exists, go to MainBottomNavScreen
+          if (mounted) {
+            displayMessageToUser("Login is successful!", context);
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => const MainBottomNavScreen()),
+            );
+          }
+        } else {
+          // If data does not exist, go to UserForm
+          if (mounted) {
+            displayMessageToUser("Please fill out your profile information", context);
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => const UserForm()),
+            );
+          }
+        }
+      } else {
+        if (mounted) {
+          displayMessageToUser("Something is wrong!", context);
+        }
+      }
+    } on FirebaseAuthException catch (e) {
+      Navigator.pop(context); // Remove the loading circle
+
+      if (e.code == 'user-not-found') {
+        if (mounted) {
+          displayMessageToUser("No user found for that email!", context);
+        }
+      } else if (e.code == 'wrong-password') {
+        if (mounted) {
+          displayMessageToUser("Wrong password provided for that user", context);
+        }
+      } else {
+        if (mounted) {
+          displayMessageToUser("An error occurred: ${e.message}", context);
+        }
+      }
+    } catch (e) {
+      Navigator.pop(context); // Remove the loading circle
+      print(e);
+    }
+  }
 
 
 

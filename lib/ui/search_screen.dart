@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:e_commerce_app_with_firebase/ui/product_details_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -10,8 +11,8 @@ class SearchScreen extends StatefulWidget {
 }
 
 class _SearchScreenState extends State<SearchScreen> {
-  //final TextEditingController _searchTEController = TextEditingController();
   late String inputText= '';
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -68,10 +69,15 @@ class _SearchScreenState extends State<SearchScreen> {
                            return ListView(
                              children: snapshot.data!.docs.map((DocumentSnapshot document){
                                  Map<String, dynamic> data = document.data() as Map<String, dynamic>;
-                                 return Card(
-                                   child: ListTile(
-                                     title: Text(data["product-name"]),
-                                     leading: Image.network(data["product-img"][0]),
+                                 return GestureDetector(
+                                   onTap: (){
+                                     Navigator.push(context, MaterialPageRoute(builder: (context)=>ProductDetailsScreen(product: data,)));
+                                   },
+                                   child: Card(
+                                     child: ListTile(
+                                       title: Text(data["product-name"]),
+                                       leading: Image.network(data["product-img"][0]),
+                                     ),
                                    ),
                                  );
                              }).toList(),

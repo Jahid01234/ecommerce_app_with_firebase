@@ -124,8 +124,8 @@ class _UserFormState extends State<UserForm> {
                     decoration: const InputDecoration(
                       hintText: "Enter your name",
                       labelText: "Name",
-                      enabledBorder: OutlineInputBorder(
-                      ),
+                      enabledBorder: OutlineInputBorder(),
+                      focusedBorder: OutlineInputBorder(),
                     ),
                     validator: ( value) {
                       if (value == null || value.isEmpty) {
@@ -147,8 +147,8 @@ class _UserFormState extends State<UserForm> {
                     decoration: const InputDecoration(
                       hintText: "Enter your phone number",
                       labelText: "Phone Number",
-                      enabledBorder: OutlineInputBorder(
-                      ),
+                      enabledBorder: OutlineInputBorder(),
+                      focusedBorder: OutlineInputBorder(),
                     ),
                    // maxLength: 11,
                     validator: (value) {
@@ -175,8 +175,8 @@ class _UserFormState extends State<UserForm> {
                     decoration:  InputDecoration(
                       hintText: "Enter your dob",
                       labelText: "Date of Birth",
-                      enabledBorder: const OutlineInputBorder(
-                      ),
+                      enabledBorder: const OutlineInputBorder(),
+                      focusedBorder: const OutlineInputBorder(),
                       suffixIcon: IconButton(
                           onPressed:() {
                             _selectDateFromPicker(context);
@@ -204,8 +204,8 @@ class _UserFormState extends State<UserForm> {
                     decoration:  InputDecoration(
                       hintText: "Enter your gender",
                       labelText: "Gender",
-                      enabledBorder: const OutlineInputBorder(
-                      ),
+                      enabledBorder: const OutlineInputBorder(),
+                      focusedBorder:const OutlineInputBorder(),
                       suffixIcon: _selectGender(),
                     ),
                     // maxLength: 11,
@@ -230,8 +230,8 @@ class _UserFormState extends State<UserForm> {
                     decoration:  const InputDecoration(
                       hintText: "Enter your age",
                       labelText: "Age",
-                      enabledBorder:  OutlineInputBorder(
-                      ),
+                      enabledBorder:  OutlineInputBorder(),
+                      focusedBorder:  OutlineInputBorder(),
                     ),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
@@ -261,8 +261,6 @@ class _UserFormState extends State<UserForm> {
                       },
                     ),
                   ),
-
-
                 ],
               ),
             ),
